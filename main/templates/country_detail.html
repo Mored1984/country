@@ -1,0 +1,58 @@
+{% extends 'base.html' %}		<!--the enheretance HTML file-->
+
+{% block body %}				<!--name of the block U want to poste inside-->
+
+<!doctype html>
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<h1>{{country.name}}</h1>		<!-- print big font the name of country cloumn -->
+<p>{{country.capital}}</p>		<!-- print whit paragraph feature-->
+
+<br><br>{{country.population}}
+
+
+{% for review in country.review_set.all %}
+
+	<h2>Title:  {{review.title}}</h2>
+	<p>Content:   {{review.content}}</p>
+	<p>review by:   {{review.user}}</p>
+
+	<hr>		<!--Horizontal Line-->
+{% endfor %}
+
+
+
+{% if user.is_authenticated %}
+	<form action="/country/{{country.pk}}/" method="POST">
+	
+	{%csrf_token%}
+	{{form.as_p}}
+	<input type="submit" value="Add Review">
+
+	</form>
+{% endif %}
+
+
+
+
+
+
+
+
+<br><br>
+
+{% for country in country_list %}
+
+country:<a href="/country/{{country.pk}}/">{{country.name}}</a>		<!--make the country.name clickable-->
+
+population:{{country.pupolation}}	
+{% endfor %}
+
+</body>
+</html>
+
+{% endblock %}
